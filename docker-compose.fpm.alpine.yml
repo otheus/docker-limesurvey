@@ -15,13 +15,13 @@ services:
     #  - lime-db
     environment:
       - "DB_TYPE=mysql"
-      - "DB_HOST=limesurvey-dev"
-      - "DB_PORT=3310"
-      - "DB_NAME=limesurvey_2024_01_22"
-      - "DB_USERNAME=limesurvey"
-      - "DB_PASSWORD=blahblah"
+      - "DB_HOST=${DB_HOST?error: value for DB_HOST needed}"
+      - "DB_PORT=${DB_PORT:-3306}"
+      - "DB_USERNAME=${DB_USERNAME:-limesurvey}"
       - "DB_TABLE_PREFIX="
-      - "ADMIN_PASSWORD=lzxkjdlk45jx"
+      - "DB_NAME=${DB_NAME?error: value for DB_NAME needed}"
+      - "DB_PASSWORD=${DB_PASSWORD?error: value for DB_PASSWORD needed}"
+      - "ADMIN_PASSWORD=${ADMIN_PASSWORD?error: value for Admin password needed}"
   lime-web:
     image: docker.io/nginx:alpine
     links:
@@ -36,9 +36,9 @@ services:
   lime-db:
     image: docker.io/mysql:5.7
     environment:
-      - "MYSQL_USER=limesurvey"
-      - "MYSQL_DATABASE=limesurvey"
-      - "MYSQL_PASSWORD=blahblah"
+      - "MYSQL_USER=${DB_USERNAME:-limesurvey}"
+      - "MYSQL_DATABASE=${DB_NAME?error: value for DB_NAME needed}"
+      - "MYSQL_PASSWORD=${DB_PASSWORD?error: value for DB_PASSWORD needed}"
       # - "MYSQL_ROOT_PASSWORD="
 volumes:
   lime:
