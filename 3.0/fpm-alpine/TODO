@@ -1,0 +1,6 @@
+
+Change php memory limit default to >128. Maybe 512
+Fix  ./framework/vendors/markdown/markdown.php on line 736
+ ^-- replace {} with []
+
+error-logging: how to log only to stderr?

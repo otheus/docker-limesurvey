@@ -46,15 +46,15 @@ RUN set -ex; \
     apk add --no-cache --no-network --virtual .limesurvey-phpext-rundeps $runDeps; \
     apk del --no-cache --no-network .build-deps
 
-ARG version="3.28.59+230517"
-ARG sha256_checksum="e048eaaf5260a8d6391609c355bb4df8c8ef0e0943b2d612d2a8414956db622a"
+ARG version="3.22.4+200212"
+ARG sha256_checksum="de906ab9f685d69c3057c75ce339068b3bdabd50c574d92d90621ec729411af3"
 ARG archive_url="https://github.com/LimeSurvey/LimeSurvey/archive/${version}.tar.gz"
 ENV LIMESURVEY_VERSION=$version
 
 # Download, unzip and chmod LimeSurvey from GitHub (defaults to the official LimeSurvey/LimeSurvey repository)
 RUN set -ex; \
-        curl -sSL "${archive_url}" --output /tmp/limesurvey.tar.gz && \
-        echo "${sha256_checksum}  /tmp/limesurvey.tar.gz" | sha256sum -c - && \
+        curl -sSL "${archive_url}" --output /tmp/limesurvey.tar.gz ;\
+        if [[ ${sha256_checksum} ]] ; then echo "${sha256_checksum}  /tmp/limesurvey.tar.gz" | sha256sum -c - ; fi; \
         \
         tar xzvf "/tmp/limesurvey.tar.gz" --strip-components=1 -C /var/www/html/ && \
         \
